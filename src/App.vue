@@ -1,28 +1,176 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 id="timer">{{ timeToString(now) }}</h1>
+    <hr/>
+    <div class="buttons-container">
+      <button @click="() => isTimerOn = !isTimerOn">{{ isTimerOn ? "Parar" : "Iniciar" }}</button>
+      <button @click="addLap">Volta</button>
+      <button @click="resetTimer">Restaurar</button>
+    </div>
+    <div class="laps">
+      <h1 id="laps-title">Voltas</h1>
+      <hr id="laps-divisor"/>
+      <div class="lap-fields">
+        <h2>Tempo</h2>
+        <h2>Duração</h2>
+        <h2>Diferença</h2>
+      </div>
+      <div v-for="lap in laps" :key="lap.at" class="lap-info">
+        <p>{{timeToString(lap.at)}}</p>
+        <p>{{timeToString(lap.time)}}</p>
+        <p>{{timeToString(lap.difference)}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data: function(){
+    return {
+      now: 0,
+      laps: [],
+      isTimerOn: false,
+    }
+  },
+  watch: {
+    isTimerOn: function(){
+      if(this.isTimerOn){
+        this.startTimer = setInterval(this.updateTime, 10)
+        return
+      }
+
+      if(!this.isTimerOn) {
+        clearInterval(this.startTimer)
+      }
+    }
+  },
+  methods: {
+    updateTime: function(){
+      this.now = this.now + 10
+    },
+    
+    resetTimer: function(){
+      this.isTimerOn = false
+      this.now = 0
+    },
+
+    addLap: function(){
+      const now = this.now
+      if(this.laps.length === 0){
+        this.laps.push({
+          at: now,
+          time: now,
+          difference: 0,
+        })
+        return
+      }
+      
+      const lastLap = this.laps[this.laps.length - 1]
+      const time = now - lastLap.at
+      this.laps.push({
+        at: now,
+        time,
+        difference: time - lastLap.time 
+      })
+    },
+
+    timeToString: function(time){
+      const date = new Date(Math.abs(time))
+
+      const miliseconds = date.getUTCMilliseconds() / 10 < 10 ? "0" + date.getUTCMilliseconds() / 10 : date.getUTCMilliseconds() / 10
+      const seconds = date.getUTCSeconds() < 10 ? "0" + date.getUTCSeconds() : date.getUTCSeconds()
+      const minutes = date.getUTCMinutes() < 10 ? "0" + date.getUTCMinutes() : date.getUTCMinutes()
+
+
+      return time < 0 ? `-${minutes}:${seconds}:${miliseconds}` :
+        `${minutes}:${seconds}:${miliseconds}`
+    }
+  },
+
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #212121;
+  width: 600px;
+  margin: 60px auto;
+}
+
+#timer{
+  font-size: 48px;
+  font-weight: 400;
+  margin: 0;
+}
+
+#laps-title{
+  font-size: 24px;
+  font-weight: 300;
+  margin: 48px 0 16px;
+}
+
+hr{
+  margin: 16px auto;
+  width: 80%;
+  border: 1px solid #212121;
+}
+
+#laps-divisor{
+  width: 100%;
+}
+
+.buttons-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-container button{
+  background: none;
+  border: 4px solid #212121;
+  border-radius: 8px;
+  width: 150px;
+  padding: 8px 0;
+  text-align: center;
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.buttons-container button:hover{
+  cursor: pointer;
+  background: #212121;
+  color: #eeeeee;
+}
+
+.laps{
+  width: 120%;
+  position: relative;
+  left: -10%;
+}
+
+.lap-info{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.lap-fields{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+
+.lap-fields h2{
+  font-weight: 300;
+  font-size: 20px;
+  margin: 8px 0;
 }
 </style>
