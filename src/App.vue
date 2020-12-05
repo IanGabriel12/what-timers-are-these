@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <h1 id="timer">{{ timeToString(now) }}</h1>
-    <hr/>
     <div class="buttons-container">
       <button @click="() => isTimerOn = !isTimerOn">{{ isTimerOn ? "Parar" : "Iniciar" }}</button>
       <button @click="addLap">Volta</button>
       <button @click="resetTimer">Restaurar</button>
     </div>
-    <div class="laps">
+    <div class="laps" v-if="laps.length !== 0">
       <h1 id="laps-title">Voltas</h1>
       <hr id="laps-divisor"/>
       <div class="lap-fields">
@@ -15,10 +14,15 @@
         <h2>Duração</h2>
         <h2>Diferença</h2>
       </div>
-      <div v-for="lap in laps" :key="lap.at" class="lap-info">
+      <div v-for="(lap, index) in laps" :key="index" class="lap-info">
         <p>{{timeToString(lap.at)}}</p>
         <p>{{timeToString(lap.time)}}</p>
-        <p>{{timeToString(lap.difference)}}</p>
+        <p 
+          :class="lap.difference > 0 ? 'positive' : 'negative'"
+        >
+          {{lap.difference > 0 ? '+' : '-'}}
+          {{timeToString(lap.difference)}}
+        </p>
       </div>
     </div>
   </div>
@@ -54,6 +58,7 @@ export default {
     resetTimer: function(){
       this.isTimerOn = false
       this.now = 0
+      this.laps = []
     },
 
     addLap: function(){
@@ -84,8 +89,7 @@ export default {
       const minutes = date.getUTCMinutes() < 10 ? "0" + date.getUTCMinutes() : date.getUTCMinutes()
 
 
-      return time < 0 ? `-${minutes}:${seconds}:${miliseconds}` :
-        `${minutes}:${seconds}:${miliseconds}`
+      return `${minutes}:${seconds}:${miliseconds}`
     }
   },
 
@@ -127,19 +131,22 @@ hr{
 }
 
 .buttons-container{
+  margin-top: 24px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.buttons-container button{
+.buttons-container button, .buttons-container button:focus{
   background: none;
   border: 4px solid #212121;
-  border-radius: 8px;
+  border-radius: 4px;
   width: 150px;
   padding: 8px 0;
   text-align: center;
   transition: background-color 0.1s, color 0.1s;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
 }
 
 .buttons-container button:hover{
@@ -172,5 +179,13 @@ hr{
   font-weight: 300;
   font-size: 20px;
   margin: 8px 0;
+}
+
+.negative{
+  color: #32d43a;
+}
+
+.positive{
+  color: #f7772d;
 }
 </style>
