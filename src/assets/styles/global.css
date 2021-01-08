@@ -1,0 +1,74 @@
+:root{
+  --primary-color: #212121;
+  --secondary-color: #f1f1f1;
+  --success-color: #47a545;
+  --danger-color: #cd4e4e;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.container{
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #212121;
+  max-width: 600px;
+  width: 100%;
+  margin: 60px auto 0;
+}
+
+.big-title{
+  font-size: 60px;
+  font-weight: 400;
+}
+
+input.big-title{
+  width: 100px;
+  border:none;
+  appearance: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+input.big-title:disabled{
+  background: none;
+  color: var(--primary-color);
+}
+
+
+
+.medium-title{
+ font-size: 32px;
+ font-weight: 400;
+}
+
+.small-title{
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.action-button, .increment-button{
+  background-color: transparent;
+  border: 3px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 8px 0;
+  color: var(--primary-color);
+  transition: background-color 0.2s;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 20px;
+}
+
+.action-button:hover, .increment-button:hover{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.increment-button{
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}

@@ -1,20 +1,20 @@
 <template>
   <div class="container">
-    <h1 id="timer">{{ timeToString(now) }}</h1>
+    <h1 id="timer" class="big-title">{{ timeToString(now) }}</h1>
     <div class="buttons-container">
-      <button @click="() => isTimerOn = !isTimerOn">{{ isTimerOn ? "Parar" : "Iniciar" }}</button>
-      <button @click="addLap">Volta</button>
-      <button @click="resetTimer">Restaurar</button>
+      <button class="action-button" @click="() => isTimerOn = !isTimerOn">{{ isTimerOn ? "Parar" : "Iniciar" }}</button>
+      <button class="action-button" @click="addLap">Volta</button>
+      <button class="action-button" @click="resetTimer">Restaurar</button>
     </div>
     <div class="laps" v-if="laps.length !== 0">
-      <h1 id="laps-title">Voltas</h1>
+      <h2 class="medium-title">Voltas</h2>
       <hr id="laps-divisor"/>
       <div class="table-container">
         <table class="laps-table">
           <tr class="lap-fields">
-            <th>Tempo</th>
-            <th>Duração</th>
-            <th>Diferença</th>
+            <th><h3 class="small-title">Tempo</h3></th>
+            <th><h3 class="small-title">Duração</h3></th>
+            <th><h3 class="small-title">Diferença</h3></th>
           </tr>
           <tr v-for="(lap, index) in laps" :key="index" class="lap-info">
             <td>{{timeToString(lap.at)}}</td>
@@ -103,27 +103,10 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  font-family: "Montserrat", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #212121;
-  max-width: 600px;
-  width: 100%;
-  margin: 60px auto 0;
-}
+
 
 #timer{
-  font-size: 48px;
-  font-weight: 400;
   margin: 0;
-}
-
-#laps-title{
-  font-size: 24px;
-  font-weight: 300;
-  margin: 48px 0 16px;
 }
 
 hr{
@@ -134,6 +117,11 @@ hr{
 
 #laps-divisor{
   width: 100%;
+  margin-bottom: 0;
+}
+
+#laps-title{
+  margin-bottom: 0;
 }
 
 .buttons-container{
@@ -144,21 +132,7 @@ hr{
 }
 
 .buttons-container button, .buttons-container button:focus{
-  background: none;
-  border: 4px solid #212121;
-  border-radius: 4px;
   width: 150px;
-  padding: 8px 0;
-  text-align: center;
-  transition: background-color 0.1s, color 0.1s;
-  font-family: "Ubuntu", sans-serif;
-  font-size: 14px;
-}
-
-.buttons-container button:hover{
-  cursor: pointer;
-  background: #212121;
-  color: #eeeeee;
 }
 
 .laps{
@@ -203,10 +177,10 @@ hr{
 }
 
 .negative{
-  color: #32d43a;
+  color: var(--success-color);
 }
 
 .positive{
-  color: #f7772d;
+  color: var(--danger-color);
 }
 </style>
