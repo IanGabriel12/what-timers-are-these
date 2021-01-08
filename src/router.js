@@ -1,10 +1,12 @@
 import VueRouter from 'vue-router'
-import TimerPage from '@/components/TimerPage'
-import PomodoroPage from '@/components/PomodoroPage'
+import TimerPage from '@/pages/TimerPage'
+import PomodoroPage from '@/pages/PomodoroPage'
+import RegressivePage from '@/pages/RegressivePage'
 
 const routes = [
   { path: '/timer', component: TimerPage },
-  { path: '/pomodoro', component: PomodoroPage }
+  { path: '/pomodoro', component: PomodoroPage },
+  { path: '/regressive', component: RegressivePage },
 ]
 
 const router = new VueRouter({

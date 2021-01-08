@@ -6,29 +6,9 @@
     <div class="timer-container">
       <button class="increment-button" @click="removeFiveMinutes">-</button>
       <div class="input-container big-title">
-        <input 
-          type="number" 
-          max="120" min="0" 
-          id="minutes"
-          class="big-title"
-          style="text-align: right"
-          :value="minutesString"
-          :disabled="!timerStopped"
-          @input="updateMinutes"
-          @blur="validateMinutesInput"
-        />
+        <number-input v-model="minutes" :maximum="120" :minimum="0" style="text-align: right"/>
         :
-        <input 
-          type="number" 
-          max="59" min="0" 
-          id="seconds" 
-          class="big-title"
-          style="text-align: left"
-          :disabled="!timerStopped"
-          :value="secondsString"
-          @input="updateSeconds"
-          @blur="validateSecondsInput"
-        />
+        <number-input v-model="seconds" :maximum="59" :minimum="0" style="text-align: left"/>
       </div>
       
       <button class="increment-button" @click="addFiveMinutes">+</button>
@@ -45,8 +25,12 @@
 </template>
 
 <script>
+import NumberInput from '@/components/NumberInput'
 const AMOUNT_TIME = 5
 export default {
+  components: {
+    NumberInput
+  },
   data(){
     return {
       minutes: AMOUNT_TIME,
@@ -85,16 +69,6 @@ export default {
       }
     }
   },
-
-  computed: {
-    minutesString(){
-      return this.minutes < 10 ? '0' + this.minutes : this.minutes
-    },
-
-    secondsString(){
-      return this.seconds < 10 ? '0' + this.seconds : this.seconds
-    }
-  },
   methods: {
     addFiveMinutes(){
       this.minutes += AMOUNT_TIME
@@ -120,32 +94,6 @@ export default {
       this.minutes = this.isRest ? AMOUNT_TIME : AMOUNT_TIME * 3
       this.seconds = 0
     },
-
-    validateMinutesInput(){
-      if(this.minutes > 120){
-        this.minutes = 120
-      }else if(this.minutes < 0){
-        this.minutes = 0
-      }
-    },
-
-    validateSecondsInput(){
-      if(this.seconds > 59){
-        this.seconds = 59
-      }else if(this.seconds < 0){
-        this.seconds = 0
-      }
-    },
-
-    updateMinutes(event){
-      this.minutes = parseInt(event.target.value, 10)
-      event.target.value = this.minutesString
-    },
-
-    updateSeconds(event){
-      this.seconds = parseInt(event.target.value)
-      event.target.value = this.secondsString
-    }
   }
 }
 </script>

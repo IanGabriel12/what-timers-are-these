@@ -27,20 +27,6 @@ input::-webkit-inner-spin-button {
   font-weight: 400;
 }
 
-input.big-title{
-  width: 100px;
-  border:none;
-  appearance: none;
-  font-family: 'Montserrat', sans-serif;
-}
-
-input.big-title:disabled{
-  background: none;
-  color: var(--primary-color);
-}
-
-
-
 .medium-title{
  font-size: 32px;
  font-weight: 400;
@@ -49,6 +35,20 @@ input.big-title:disabled{
 .small-title{
   font-size: 24px;
   font-weight: 400;
+}
+
+.buttons-container{
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons-container button{
+  width: 150px;
+}
+
+.buttons-container button:first-child{
+  margin-right: 48px;
 }
 
 .action-button, .increment-button{
