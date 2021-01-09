@@ -3,6 +3,11 @@
   --secondary-color: #f1f1f1;
   --success-color: #47a545;
   --danger-color: #cd4e4e;
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
 }
 
 input::-webkit-outer-spin-button,
@@ -19,7 +24,8 @@ input::-webkit-inner-spin-button {
   color: #212121;
   max-width: 600px;
   width: 100%;
-  margin: 60px auto 0;
+  margin: auto;
+  padding-top: 60px;
 }
 
 .big-title{
@@ -35,6 +41,7 @@ input::-webkit-inner-spin-button {
 .small-title{
   font-size: 24px;
   font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .buttons-container{

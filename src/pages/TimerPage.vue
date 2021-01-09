@@ -135,6 +135,10 @@ hr{
   width: 150px;
 }
 
+.buttons-container button:first-child{
+  margin: 0;
+}
+
 .laps{
   width: 100%;
 }

@@ -48,7 +48,7 @@ export default {
         this.interval = setInterval(() => {
           this.seconds--
 
-          if(this.seconds <= 0){
+          if(this.seconds < 0){
             if(parseInt(this.minutes, 10) === 0){
               //timer ended
               this.timerStopped = true
